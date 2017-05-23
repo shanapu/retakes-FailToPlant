@@ -25,7 +25,6 @@
 // Includes
 #include <sourcemod>
 #include <sdktools>
-#include <autoexecconfig>
 #include <retakes>
 
 // Optional Plugins
