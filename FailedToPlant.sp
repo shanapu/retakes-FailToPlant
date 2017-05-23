@@ -1,7 +1,7 @@
 /*
  * Retake - FailToPlant Plugin.
  * by: shanapu
- * https://github.com/shanapu/FailToPlant
+ * https://github.com/shanapu/retake-FailToPlant
  * 
  * to use with https://github.com/splewis/csgo-retakes/
  * 
@@ -56,7 +56,7 @@ public Plugin myinfo =
 	author = "shanapu",
 	description = "Kick/Ban players who failed to plant the bomb in retake",
 	version = PLUGIN_VERSION,
-	url = "https://github.com/shanapu/FailToPlant"
+	url = "https://github.com/shanapu/retake-FailToPlant"
 };
 
 // Start
