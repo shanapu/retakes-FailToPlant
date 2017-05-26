@@ -20,7 +20,7 @@
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#define PLUGIN_VERSION "1.0"
+#define PLUGIN_VERSION "1.1"
 
 // Includes
 #include <sourcemod>
@@ -67,7 +67,7 @@ public void OnPluginStart()
 
 	gc_bPlugin = CreateConVar("sm_retakes_fail_plant_enable", "1", "0 - disabled, 1 - enable this plugin", _, true, 0.0, true, 1.0);
 	gc_iFailNumber = CreateConVar("sm_retakes_fail_plant_times", "3", "How many times to fail to plant bomb before take action", _, true, 1.0);
-	gc_bAction = CreateConVar("sm_retakes_fail_plant_action", "0", "What action after a player reach sm_retakes_fail_plant_times? 0 - Kick / 1 - Ban", _, true, 1.0, true, 2.0);
+	gc_bAction = CreateConVar("sm_retakes_fail_plant_action", "0", "What action after a player reach sm_retakes_fail_plant_times? 0 - Kick / 1 - Ban", _, true, 0.0, true, 1.0);
 	gc_iBanTime = CreateConVar("sm_retakes_fail_plant_ban_time", "15", "How long should the player banned on 'sm_retakes_fail_plant_times' '2'? In Minutes / 0 = permanent", _, true, 0.0);
 	gc_sBanReason = CreateConVar("sm_retakes_fail_plant_reason", "You failed to often to plant the bomb", "The kick/ban reason for a player", _, true, 0.0);
 
