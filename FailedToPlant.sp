@@ -1,5 +1,5 @@
 /*
- * Retake - FailToPlant Plugin.
+ * Retakes - FailToPlant Plugin.
  * by: shanapu
  * https://github.com/shanapu/retake-FailToPlant
  * 
@@ -20,7 +20,7 @@
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#define PLUGIN_VERSION "1.1"
+#define PLUGIN_VERSION "1.2"
 
 // Includes
 #include <sourcemod>
@@ -30,6 +30,7 @@
 // Optional Plugins
 #undef REQUIRE_PLUGIN
 #include <sourcebans>
+#include <sourcebanspp>
 #define REQUIRE_PLUGIN
 
 // Compiler Options
@@ -54,9 +55,9 @@ public Plugin myinfo =
 {
 	name = "FailedToPlant",
 	author = "shanapu",
-	description = "Kick/Ban players who failed to plant the bomb in retake",
+	description = "Kick/Ban players who failed to plant the bomb in retakes",
 	version = PLUGIN_VERSION,
-	url = "https://github.com/shanapu/retake-FailToPlant"
+	url = "https://github.com/shanapu/retakes-FailToPlant"
 };
 
 // Start
@@ -80,7 +81,7 @@ public void OnPluginStart()
 
 public void OnSettingChanged(Handle convar, const char[] oldValue, const char[] newValue)
 {
-	if (convar == gc_sBanReason) 
+	if (convar == gc_sBanReason)
 	{
 		strcopy(g_sBanReason, sizeof(g_sBanReason), newValue);
 	}
@@ -102,21 +103,30 @@ public void Retakes_OnFailToPlant(int client)
 	{
 		if (!gc_bAction.BoolValue) // kick player
 		{
-			KickClient(client, g_sBanReason);
 			LogMessage("Autokicked client %L for fail to plant.", client);
 			Retakes_MessageToAll("%N was kicked for fail to plant %i times.", client, gc_iFailNumber.IntValue);
+
+			KickClient(client, g_sBanReason);
 		}
 		else // ban player
 		{
-			if (GetFeatureStatus(FeatureType_Native, "SBBanPlayer") == FeatureStatus_Available)
+			if (GetFeatureStatus(FeatureType_Native, "SBPP_BanPlayer") == FeatureStatus_Available)
 			{
-				SBBanPlayer(0, client, gc_iBanTime.IntValue, g_sBanReason);
 				LogMessage("Autobanned client %L for fail to plant via SourceBans.", client);
+
+				SBPP_BanPlayer(0, client, gc_iBanTime.IntValue, g_sBanReason);
+			}
+			else if (GetFeatureStatus(FeatureType_Native, "SBBanPlayer") == FeatureStatus_Available)
+			{
+				LogMessage("Autobanned client %L for fail to plant via SourceBans.", client);
+
+				SBBanPlayer(0, client, gc_iBanTime.IntValue, g_sBanReason);
 			}
 			else
 			{
-				BanClient(client, gc_iBanTime.IntValue, BANFLAG_AUTHID, g_sBanReason, g_sBanReason, "Retake - FailToPlant");
 				LogMessage("Autobanned client %L for fail to plant.", client);
+
+				BanClient(client, gc_iBanTime.IntValue, BANFLAG_AUTHID, g_sBanReason, g_sBanReason, "Retakes - FailToPlant");
 			}
 
 			Retakes_MessageToAll("%N was banned for fail to plant %i times.", client, gc_iFailNumber.IntValue);
